@@ -41,3 +41,5 @@ uv run pytest --cov --cov-report=term-missing
 - `ty` type checking
 - `pytest --cov --cov-fail-under=100`
 - `secrets` — scans staged files for API keys, tokens, private keys
+- `bandit` — static security analysis for Python code
+- `pip-audit` — scans dependencies for known CVEs
