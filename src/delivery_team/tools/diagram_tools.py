@@ -1,3 +1,4 @@
+import base64
 import json
 from pathlib import Path
 from typing import Any
@@ -14,6 +15,7 @@ def render_mermaid(
     result = {
         "mmd_path": str(file_path),
         "svg_path": None,
+        "svg_data_uri": None,
         "rendered": False,
     }
     try:
@@ -28,8 +30,10 @@ def render_mermaid(
             },
         )
         with urlopen(req, timeout=30) as resp:  # nosec
-            svg_path.write_bytes(resp.read())
+            svg_bytes = resp.read()
+            svg_path.write_bytes(svg_bytes)
         result["svg_path"] = str(svg_path)
+        result["svg_data_uri"] = "data:image/svg+xml;base64," + base64.b64encode(svg_bytes).decode()
         result["rendered"] = True
     except Exception:  # nosec  # pragma: no cover
         pass

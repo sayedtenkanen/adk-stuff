@@ -34,7 +34,9 @@ root_agent = Agent(
         "You have the web_search tool to look up documentation, APIs, "
         "or best practices when needed.\n"
         "You have the render_mermaid tool to generate architecture diagrams "
-        "and flowcharts as SVG images.\n\n"
+        "and flowcharts as SVG images. "
+        "When the tool returns an svg_data_uri, embed it in your response "
+        "as an inline image: ![diagram](svg_data_uri)\n\n"
         "Keep the user updated on progress throughout."
     ),
     sub_agents=[
