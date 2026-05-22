@@ -35,8 +35,8 @@ root_agent = Agent(
         "or best practices when needed.\n"
         "You have the render_mermaid tool to generate architecture diagrams "
         "and flowcharts as SVG images. "
-        "When showing a diagram, use the svg_data_uri value directly as the image source. "
-        "For example: ![architecture diagram](data:image/svg+xml;base64,...)\n\n"
+        "When the tool returns a display field, include that HTML verbatim "
+        "in your response to show the diagram inline.\n\n"
         "Keep the user updated on progress throughout."
     ),
     sub_agents=[

@@ -15,7 +15,7 @@ def render_mermaid(
     result = {
         "mmd_path": str(file_path),
         "svg_path": None,
-        "svg_data_uri": None,
+        "display": None,
         "rendered": False,
     }
     try:
@@ -33,7 +33,8 @@ def render_mermaid(
             svg_bytes = resp.read()
             svg_path.write_bytes(svg_bytes)
         result["svg_path"] = str(svg_path)
-        result["svg_data_uri"] = "data:image/svg+xml;base64," + base64.b64encode(svg_bytes).decode()
+        data_uri = "data:image/svg+xml;base64," + base64.b64encode(svg_bytes).decode()
+        result["display"] = f'<img src="{data_uri}" alt="diagram" />'
         result["rendered"] = True
     except Exception:  # nosec  # pragma: no cover
         pass
