@@ -40,3 +40,4 @@ uv run pytest --cov --cov-report=term-missing
 - `ruff-format`
 - `ty` type checking
 - `pytest --cov --cov-fail-under=100`
+- `secrets` — scans staged files for API keys, tokens, private keys
