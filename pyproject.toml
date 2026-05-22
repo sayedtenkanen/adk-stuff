@@ -12,6 +12,9 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pre-commit>=4.6.0",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3.0",
+    "pytest-cov>=7.1.0",
     "ruff>=0.15.14",
     "ty>=0.0.39",
 ]
@@ -34,3 +37,21 @@ python-version = "3.11"
 
 [tool.ty.src]
 include = ["src"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]
+filterwarnings = [
+    "ignore::pytest.PytestCollectionWarning",
+]
+
+[tool.coverage.run]
+source = ["delivery_team"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+]
