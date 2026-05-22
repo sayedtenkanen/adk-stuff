@@ -21,3 +21,9 @@ repos:
         language: system
         types: [python]
         pass_filenames: false
+
+      - id: secrets
+        name: secrets
+        entry: .pre-commit-hooks/check-secrets.sh
+        language: script
+        pass_filenames: false
