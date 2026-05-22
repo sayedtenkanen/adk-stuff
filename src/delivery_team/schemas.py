@@ -8,7 +8,7 @@ class RequirementInput(BaseModel):
 
 
 class ArchitecturePlan(BaseModel):
-    components: list[dict[str, str]]
+    components: list[str]
     tech_stack: list[str]
     data_flow: str
 

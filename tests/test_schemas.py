@@ -30,11 +30,11 @@ class TestRequirementInput:
 class TestArchitecturePlan:
     def test_valid(self) -> None:
         data = ArchitecturePlan(
-            components=[{"name": "api", "resp": "handle requests"}],
+            components=["api", "db"],
             tech_stack=["python", "fastapi"],
             data_flow="request -> api -> db",
         )
-        assert len(data.components) == 1
+        assert len(data.components) == 2
         assert "python" in data.tech_stack
         assert data.data_flow == "request -> api -> db"
 
