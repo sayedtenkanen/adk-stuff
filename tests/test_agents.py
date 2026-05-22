@@ -120,3 +120,6 @@ class TestCoordinator:
 
     def test_has_web_search_tool(self) -> None:
         assert any(t.__name__ == "web_search" for t in root_agent.tools)
+
+    def test_has_render_mermaid_tool(self) -> None:
+        assert any(t.__name__ == "render_mermaid" for t in root_agent.tools)
