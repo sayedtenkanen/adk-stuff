@@ -23,10 +23,12 @@ cp .env.example .env  # or edit .env with your API key
 ## Run
 
 ```bash
-PYTHONPATH=src uv run adk web src/delivery_team
+PYTHONPATH=src uv run adk web src
 ```
 
-Open http://127.0.0.1:8000.
+Open http://127.0.0.1:8000. The app will appear as **`delivery_team`** in the UI.
+
+> **Note:** If you get a `RateLimitError` / `FreeUsageLimitError`, the API key's rate limit has been exceeded. Wait a moment and retry, or use a different provider.
 
 ## Test
 
