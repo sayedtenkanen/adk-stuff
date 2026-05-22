@@ -14,3 +14,10 @@ repos:
         language: system
         types: [python]
         pass_filenames: false
+
+      - id: coverage
+        name: coverage
+        entry: uv run pytest --cov --cov-fail-under=100 --no-header -q
+        language: system
+        types: [python]
+        pass_filenames: false
