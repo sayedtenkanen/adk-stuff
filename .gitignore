@@ -8,4 +8,6 @@ dist/
 *.egg-info/
 .adk/
 *.svg
-*.svg
+*.png
+*.html
+diagrams/

@@ -33,10 +33,9 @@ root_agent = Agent(
         "6. Report the results back to the user\n\n"
         "You have the web_search tool to look up documentation, APIs, "
         "or best practices when needed.\n"
-        "You have the render_mermaid tool to generate architecture diagrams "
-        "and flowcharts as PNG images. "
-        "After calling render_mermaid, copy the 'display' value from the result "
-        "onto its own line in your response. Do not modify it.\n\n"
+        "You have the render_mermaid tool to generate architecture diagrams. "
+        "It saves an HTML file with the diagram and opens it in the browser. "
+        "Tell the user the HTML file path.\n\n"
         "Keep the user updated on progress throughout."
     ),
     sub_agents=[

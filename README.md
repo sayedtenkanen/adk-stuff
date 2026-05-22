@@ -5,21 +5,31 @@ Multi-agent software delivery team built with Google ADK 2.0.
 ## Agents
 
 | Agent | Mode | Role | Tools |
-|---|---|---|---|---|
+|---|---|---|---|
+| **Coordinator** | multi-agent | Orchestrates the delivery pipeline | `web_search`, `render_mermaid` |
 | Product Owner | chat | Clarifies requirements | — |
 | Architect | single_turn | Produces architecture plan | — |
 | Scrum Master | task | Breaks plan into sprint backlog | — |
-| Developer | task | Writes and runs code | read_file, write_file, run_code |
-| QA Engineer | task | Writes and runs tests | read_file, write_file, run_code, run_code_from_files |
+| Developer | task | Writes and runs code | `read_file`, `write_file`, `run_code` |
+| QA Engineer | task | Writes and runs tests | `read_file`, `write_file`, `run_code`, `run_code_from_files` |
 
-The root coordinator has a `web_search` tool (DuckDuckGo, no API key) for looking up docs and best practices, available to all sub-agents via delegation.
+### Tool Details
+
+| Tool | Description |
+|---|---|
+| `web_search(query, max_results=5)` | Web search via DuckDuckGo (no API key). Returns title, URL, snippet. |
+| `render_mermaid(code, output_path)` | Generates a diagram from Mermaid syntax. Renders to PNG via Kroki.io, saves an HTML file, and opens it in the browser. |
+| `read_file(path)` | Reads a file from disk. |
+| `write_file(path, content)` | Writes a file to disk (creates parent directories). |
+| `run_code(code, filename)` | Executes Python code in an isolated temp directory (30s timeout). |
+| `run_code_from_files(files, entry_point)` | Executes a multi-file Python project in a temp directory. |
 
 ## Setup
 
 ```bash
 uv venv && uv sync
 uv run pre-commit install
-# edit .env with your provider (see below)
+cp .env.example .env   # then edit .env with your provider
 ```
 
 ## Provider Setup
@@ -49,6 +59,8 @@ Open http://127.0.0.1:8000. The app will appear as **`delivery_team`** in the UI
 
 ## Test
 
+100% branch coverage is enforced.
+
 ```bash
 uv run pytest --cov --cov-report=term-missing
 ```
@@ -57,8 +69,12 @@ uv run pytest --cov --cov-report=term-missing
 
 - `ruff` lint + auto-fix
 - `ruff-format`
-- `ty` type checking
-- `pytest --cov --cov-fail-under=100`
+- `ty` strict type checking
+- `pytest --cov --cov-fail-under=100` — 100% branch coverage required
 - `secrets` — scans staged files for API keys, tokens, private keys
-- `bandit` — static security analysis for Python code
-- `pip-audit` — scans dependencies for known CVEs
+- `bandit` — static security analysis for Python code (skips subprocess/assert rules — intentional for code execution tools)
+- `pip-audit` — scans dependencies for known CVEs. Suppressed: `PYSEC-2026-161` (starlette pinned by google-adk, unfixable without breaking compatibility)
+
+## CI
+
+GitHub Actions workflow in `.github/workflows/ci.yml` runs all checks on push/PR to `main`.

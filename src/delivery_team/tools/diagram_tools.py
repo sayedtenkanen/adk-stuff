@@ -1,5 +1,6 @@
 import base64
 import json
+import webbrowser
 from pathlib import Path
 from typing import Any
 from urllib.request import Request, urlopen
@@ -14,12 +15,10 @@ def render_mermaid(
     file_path.write_text(code)
     result = {
         "mmd_path": str(file_path),
-        "png_path": None,
-        "display": None,
+        "html_path": None,
         "rendered": False,
     }
     try:
-        png_path = file_path.with_suffix(".png")
         body = json.dumps({"diagram_source": code}).encode()
         req = Request(
             "https://kroki.io/mermaid/png",
@@ -31,11 +30,14 @@ def render_mermaid(
         )
         with urlopen(req, timeout=30) as resp:  # nosec
             png_bytes = resp.read()
-            png_path.write_bytes(png_bytes)
-        result["png_path"] = str(png_path)
-        data_uri = "data:image/png;base64," + base64.b64encode(png_bytes).decode()
-        result["display"] = f"![diagram]({data_uri})"
+        html_path = file_path.with_suffix(".html")
+        html_path.write_text(
+            f"<html><body><img src='data:image/png;base64,"
+            f"{base64.b64encode(png_bytes).decode()}'/></body></html>"
+        )
+        result["html_path"] = str(html_path)
         result["rendered"] = True
+        webbrowser.open(f"file://{html_path.resolve()}")
     except Exception:  # nosec  # pragma: no cover
         pass
     return result
