@@ -12,11 +12,11 @@ class TestRenderMermaid:
         assert output.exists()
         assert output.read_text() == code
 
-    def test_returns_svg_path_on_render(self, tmp_path: Path) -> None:
+    def test_returns_png_path_on_render(self, tmp_path: Path) -> None:
         code = "graph TD; A-->B;"
         output = tmp_path / "diagram.mmd"
         result = render_mermaid(code, str(output))
-        assert "svg_path" in result
+        assert "png_path" in result
         assert "rendered" in result
 
     def test_creates_parent_directories(self, tmp_path: Path) -> None:

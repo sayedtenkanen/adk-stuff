@@ -14,15 +14,15 @@ def render_mermaid(
     file_path.write_text(code)
     result = {
         "mmd_path": str(file_path),
-        "svg_path": None,
+        "png_path": None,
         "display": None,
         "rendered": False,
     }
     try:
-        svg_path = file_path.with_suffix(".svg")
+        png_path = file_path.with_suffix(".png")
         body = json.dumps({"diagram_source": code}).encode()
         req = Request(
-            "https://kroki.io/mermaid/svg",
+            "https://kroki.io/mermaid/png",
             data=body,
             headers={
                 "Content-Type": "application/json",
@@ -30,11 +30,11 @@ def render_mermaid(
             },
         )
         with urlopen(req, timeout=30) as resp:  # nosec
-            svg_bytes = resp.read()
-            svg_path.write_bytes(svg_bytes)
-        result["svg_path"] = str(svg_path)
-        data_uri = "data:image/svg+xml;base64," + base64.b64encode(svg_bytes).decode()
-        result["display"] = f'<img src="{data_uri}" alt="diagram" />'
+            png_bytes = resp.read()
+            png_path.write_bytes(png_bytes)
+        result["png_path"] = str(png_path)
+        data_uri = "data:image/png;base64," + base64.b64encode(png_bytes).decode()
+        result["display"] = f"![diagram]({data_uri})"
         result["rendered"] = True
     except Exception:  # nosec  # pragma: no cover
         pass
