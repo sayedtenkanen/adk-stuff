@@ -17,7 +17,22 @@ Multi-agent software delivery team built with Google ADK 2.0.
 ```bash
 uv venv && uv sync
 uv run pre-commit install
-cp .env.example .env  # or edit .env with your API key
+cp .env.example .env  # or edit .env with your provider
+```
+
+## Provider Setup
+
+### GitHub Copilot (recommended)
+```env
+ZEN_MODEL="github_copilot/gpt-4o"
+```
+No API key needed. On first LLM call, LiteLLM will open a browser for GitHub OAuth device flow authentication. Supported models include `github_copilot/gpt-4o`, `github_copilot/claude-sonnet-4.5`, etc.
+
+### OpenCode Zen (fallback)
+```env
+OPENAI_API_KEY="your-key"
+OPENAI_BASE_URL="https://opencode.ai/zen/v1"
+ZEN_MODEL="openai/deepseek-v4-flash-free"
 ```
 
 ## Run
