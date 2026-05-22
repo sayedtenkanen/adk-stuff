@@ -117,3 +117,6 @@ class TestCoordinator:
 
     def test_sub_agent_count(self) -> None:
         assert len(root_agent.sub_agents) == 5
+
+    def test_has_web_search_tool(self) -> None:
+        assert any(t.__name__ == "web_search" for t in root_agent.tools)

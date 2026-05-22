@@ -5,6 +5,7 @@ description = "ADK Multi-Agent Software Delivery Team"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "ddgs>=9.14.4",
     "google-adk>=2.0.0",
     "litellm>=1.85.1",
 ]

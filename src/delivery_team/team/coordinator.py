@@ -8,6 +8,7 @@ from delivery_team.team.developer import developer_agent
 from delivery_team.team.product_owner import product_owner_agent
 from delivery_team.team.qa_engineer import qa_engineer_agent
 from delivery_team.team.scrum_master import scrum_master_agent
+from delivery_team.tools.search_tools import web_search
 
 model = os.getenv("ZEN_MODEL", "openai/deepseek-v4-flash-free")
 
@@ -29,6 +30,8 @@ root_agent = Agent(
         "4. Pass each task to the Developer for implementation\n"
         "5. Pass the code to the QA Engineer for testing\n"
         "6. Report the results back to the user\n\n"
+        "You have the web_search tool to look up documentation, APIs, "
+        "or best practices when needed.\n\n"
         "Keep the user updated on progress throughout."
     ),
     sub_agents=[
@@ -38,4 +41,5 @@ root_agent = Agent(
         developer_agent,
         qa_engineer_agent,
     ],
+    tools=[web_search],
 )
